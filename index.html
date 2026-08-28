@@ -594,21 +594,31 @@
   <span id="toastMsg">تمت الإضافة إلى السلة</span>
 </div>
 
-<script>
-/* ============ EL PLAS — نظام تتبع التحليلات الحقيقي ============ */
+<script type="module">
+/* ============ EL PLAS — نظام تتبع التحليلات الحقيقي (Firebase Firestore) ============ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC3QCMVY7t4JdbzYDDIRSIsXT-nVfuviKo",
+  authDomain: "elplas-store.firebaseapp.com",
+  projectId: "elplas-store",
+  storageBucket: "elplas-store.firebasestorage.app",
+  messagingSenderId: "760639323059",
+  appId: "1:760639323059:web:4cd793c825a4c03cd9a9c6",
+  measurementId: "G-70D4G7YD77"
+};
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
 const PLAS_KEYS = {
-  VISITS: 'PLAS_analytics_visits',
-  PRODUCT_VIEWS: 'PLAS_analytics_product_views',
-  CLICKS: 'PLAS_analytics_clicks',
-  ORDERS: 'PLAS_analytics_orders'
+  VISITS: 'visits',
+  PRODUCT_VIEWS: 'product_views',
+  CLICKS: 'clicks',
+  ORDERS: 'orders'
 };
 function PLASLog(key, data){
-  try{
-    const arr = JSON.parse(localStorage.getItem(key) || '[]');
-    arr.push(Object.assign({ ts: Date.now() }, data));
-    if(arr.length > 5000) arr.splice(0, arr.length - 5000);
-    localStorage.setItem(key, JSON.stringify(arr));
-  }catch(e){}
+  addDoc(collection(db, key), Object.assign({ ts: Date.now() }, data)).catch(e=>console.warn('تعذر تسجيل الحدث في Firebase:', e));
 }
 PLASLog(PLAS_KEYS.VISITS, { page: 'home' });
 
