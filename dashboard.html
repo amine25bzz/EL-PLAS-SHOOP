@@ -328,10 +328,10 @@
       <button class="icon-action spin-on-click" id="refreshBtn" title="تحديث البيانات">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 2.6-6.4"/><path d="M3 4v5h5"/></svg>
       </button>
-      <button class="icon-action" id="exportBtn" title="تنزيل data.json المحدّث">
+      <button class="icon-action" id="exportBtn" title="تنزيل نسخة احتياطية JSON من البيانات الحالية">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
       </button>
-      <button class="icon-action danger" id="resetBtn" title="مسح بيانات التحليلات المخزّنة محلياً في هذا المتصفح">
+      <button class="icon-action danger" id="resetBtn" title="حذف كل بيانات التحليلات نهائياً من قاعدة البيانات (Firebase)">
         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
       </button>
     </div>
@@ -355,17 +355,17 @@
       </span>
       <span>
         <span class="dot red" id="dataStatusDot"></span>
-        <span id="dataStatusText">السجل المحفوظ (data.json): جارٍ التحميل...</span>
+        <span id="dataStatusText">قاعدة البيانات (Firebase): جارٍ الاتصال...</span>
       </span>
     </div>
-    <button class="btn-select" id="exportDataBtn">⬇️ تنزيل data.json المحدّث</button>
+    <button class="btn-select" id="exportDataBtn">⬇️ تنزيل نسخة احتياطية JSON</button>
   </div>
 
   <div id="emptyBanner" class="empty-banner" style="display:none;">
     <div class="ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
     <div>
       <h3>لا توجد بيانات حقيقية مسجّلة بعد</h3>
-      <p>هذه اللوحة تعرض الأحداث الفعلية المسجلة من متجرك (زيارات، مشاهدات، نقرات، طلبات). قم بزيارة المتجر والتفاعل مع المنتجات، ثم عد لهذه الصفحة لرؤية البيانات. الأحداث تُسجَّل مباشرة في متصفحك، وتُدمَج تلقائياً مع أي سجل محفوظ سابقاً في <code>data.json</code>.</p>
+      <p>هذه اللوحة تعرض الأحداث الفعلية المسجلة من متجرك (زيارات، مشاهدات، نقرات، طلبات). قم بزيارة المتجر والتفاعل مع المنتجات، ثم عد لهذه الصفحة لرؤية البيانات. الأحداث تُسجَّل مباشرة في قاعدة بيانات Firebase وتظهر هنا فوراً ومن أي جهاز أو متصفح.</p>
     </div>
   </div>
 
@@ -459,7 +459,7 @@
         <div class="ai-ic"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m6.8 6.8-2.8-2.8"/><path d="M2 12h4"/><path d="m6.8 17.2-2.8 2.8"/><path d="M12 18v4"/><path d="m17.2 17.2 2.8 2.8"/><path d="M18 12h4"/><path d="m17.2 6.8 2.8-2.8"/><circle cx="12" cy="12" r="3.5"/></svg></div>
         <div>
           <h3>المساعد الذكي لتحليل المبيعات والسوق</h3>
-          <p>مدعوم بـ الذكاء الاصطناعي — يحلّل بيانات متجرك الحقيقية ويقترح خطوات لزيادة المبيعات</p>
+          <p>مدعوم بـ الذكاء الاصطناعي — يحلّل بيانات متجرك الحقيقية (من Firebase) ويقترح خطوات لزيادة المبيعات</p>
         </div>
       </div>
       <button class="ai-btn" id="aiAnalyzeBtn">
@@ -493,30 +493,48 @@
 </div>
 
 <footer class="note">
-  المنتجات تُحمَّل تلقائياً من products.json. أحداث الزيارات والنقرات والطلبات تُسجَّل مباشرة في متصفحك (localStorage) بواسطة صفحات المتجر، وتُدمَج هنا تلقائياً مع أي سجل تاريخي محفوظ في data.json.
-  لجعل هذا السجل التاريخي يظهر لجميع الأجهزة، اضغط "⬇️ تنزيل data.json المحدّث" بين الحين والآخر وارفع الملف إلى مستودع GitHub الخاص بالموقع.
+  المنتجات تُحمَّل تلقائياً من products.json. أحداث الزيارات والمشاهدات والنقرات والطلبات تُسجَّل مباشرة في قاعدة بيانات Firebase من صفحات المتجر، وتظهر هنا فوراً وبشكل تلقائي من أي جهاز أو متصفح — بدون الحاجة لتنزيل أو رفع أي ملفات يدوياً.
 </footer>
 
-<script>
+<script type="module">
 /* ================================================================
-   لوحة التحكم — تحميل تلقائي للمنتجات من products.json (بدون
-   الاعتماد على localStorage لكتالوج المنتجات)، ودمج بيانات
-   التحليلات الحيّة المسجّلة في هذا المتصفح (localStorage، تُكتب من
-   صفحات المتجر والمنتج) مع سجل تاريخي محفوظ في data.json.
-   بما أن الموقع مستضاف على GitHub Pages (استضافة ثابتة)، لا يمكن
-   الكتابة التلقائية في data.json على الخادم؛ يمكن تنزيل النسخة
-   المحدّثة ورفعها يدوياً للحفاظ على السجل عبر جميع الأجهزة.
+   لوحة التحكم — تحميل تلقائي للمنتجات من products.json (بدون تغيير)،
+   وتسجيل/جلب أحداث التحليلات (زيارات، مشاهدات، نقرات، طلبات) بشكل
+   حي ومباشر من قاعدة بيانات Firebase Firestore بدل localStorage أو
+   ملف data.json. بما أن Firebase قاعدة بيانات سحابية حقيقية، فالبيانات
+   تكون متاحة تلقائياً من أي جهاز أو متصفح بدون أي تدخل يدوي (بدون
+   تنزيل أو رفع ملفات).
    ================================================================ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, getDocs, deleteDoc, onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyC3QCMVY7t4JdbzYDDIRSIsXT-nVfuviKo",
+  authDomain: "elplas-store.firebaseapp.com",
+  projectId: "elplas-store",
+  storageBucket: "elplas-store.firebasestorage.app",
+  messagingSenderId: "760639323059",
+  appId: "1:760639323059:web:4cd793c825a4c03cd9a9c6",
+  measurementId: "G-70D4G7YD77"
+};
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+// أسماء مجموعات (collections) Firestore التي تُخزَّن فيها الأحداث
 const PLAS_KEYS = {
-  VISITS: 'PLAS_analytics_visits',
-  PRODUCT_VIEWS: 'PLAS_analytics_product_views',
-  CLICKS: 'PLAS_analytics_clicks',
-  ORDERS: 'PLAS_analytics_orders'
+  VISITS: 'visits',
+  PRODUCT_VIEWS: 'product_views',
+  CLICKS: 'clicks',
+  ORDERS: 'orders'
 };
 
 let products = [];
-let persistedAnalytics = { visits:[], product_views:[], clicks:[], orders:[] };
+
+// نسخة حيّة (مباشرة) من كل مجموعة، تُحدَّث تلقائياً بواسطة onSnapshot
+let liveData = { visits: [], product_views: [], clicks: [], orders: [] };
+let fbConnectedCount = 0;
 
 // ========== حالة تحميل المنتجات ==========
 function updateFileStatus(connected, msg = '') {
@@ -531,20 +549,20 @@ function updateFileStatus(connected, msg = '') {
   }
 }
 
-// ========== حالة تحميل data.json ==========
-function updateDataStatus(connected, msg = '') {
+// ========== حالة الاتصال بقاعدة بيانات Firebase ==========
+function updateFirebaseStatus(connected, msg = '') {
   const dot = document.getElementById('dataStatusDot');
   const text = document.getElementById('dataStatusText');
   if (connected) {
     dot.className = 'dot green';
-    text.textContent = '✅ السجل المحفوظ (data.json): ' + msg;
+    text.textContent = '✅ قاعدة البيانات (Firebase): ' + msg;
   } else {
     dot.className = 'dot red';
-    text.textContent = '⚠️ السجل المحفوظ (data.json): ' + (msg || 'غير موجود بعد');
+    text.textContent = '⚠️ قاعدة البيانات (Firebase): ' + (msg || 'تعذر الاتصال');
   }
 }
 
-// ========== تحميل تلقائي لكتالوج المنتجات من products.json ==========
+// ========== تحميل تلقائي لكتالوج المنتجات من products.json (بدون تغيير) ==========
 async function loadProductsCatalog(){
   try{
     const res = await fetch('products.json', { cache:'no-store' });
@@ -561,51 +579,34 @@ async function loadProductsCatalog(){
   render();
 }
 
-// ========== تحميل تلقائي للسجل التاريخي المحفوظ من data.json ==========
-async function loadPersistedAnalytics(){
-  try{
-    const res = await fetch('data.json', { cache:'no-store' });
-    if(!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    persistedAnalytics = {
-      visits: Array.isArray(data.visits) ? data.visits : [],
-      product_views: Array.isArray(data.product_views) ? data.product_views : [],
-      clicks: Array.isArray(data.clicks) ? data.clicks : [],
-      orders: Array.isArray(data.orders) ? data.orders : []
-    };
-    const total = persistedAnalytics.visits.length + persistedAnalytics.product_views.length + persistedAnalytics.clicks.length + persistedAnalytics.orders.length;
-    updateDataStatus(true, `${total} حدث محفوظ`);
-  }catch(err){
-    console.warn('لا يوجد data.json بعد أو تعذر تحميله:', err.message);
-    persistedAnalytics = { visits:[], product_views:[], clicks:[], orders:[] };
-    updateDataStatus(false, 'لم يُنشأ بعد');
-  }
-  render();
-}
-
-// ========== دمج الأحداث الحيّة (localStorage) مع السجل التاريخي (data.json) ==========
-function dedupeEvents(arr){
-  const seen = new Set();
-  const out = [];
-  arr.forEach(e=>{
-    const k = JSON.stringify(e);
-    if(!seen.has(k)){ seen.add(k); out.push(e); }
-  });
-  return out;
-}
-
-const PERSIST_KEY_MAP = {
+// ========== الاستماع الحي (Real-time) لأحداث Firebase ==========
+const COLLECTION_TO_STATE = {
   [PLAS_KEYS.VISITS]: 'visits',
   [PLAS_KEYS.PRODUCT_VIEWS]: 'product_views',
   [PLAS_KEYS.CLICKS]: 'clicks',
   [PLAS_KEYS.ORDERS]: 'orders'
 };
+const TOTAL_COLLECTIONS = Object.keys(COLLECTION_TO_STATE).length;
 
+function listenToCollection(collectionName){
+  const stateKey = COLLECTION_TO_STATE[collectionName];
+  onSnapshot(collection(db, collectionName), (snapshot)=>{
+    liveData[stateKey] = snapshot.docs.map(d => d.data());
+    fbConnectedCount = Math.min(TOTAL_COLLECTIONS, fbConnectedCount + 1);
+    const totalEvents = Object.values(liveData).reduce((s,a)=> s + a.length, 0);
+    updateFirebaseStatus(true, `متصل ومباشر — ${totalEvents} حدث مسجّل`);
+    render();
+  }, (err)=>{
+    console.error('تعذر الاتصال بمجموعة Firebase:', collectionName, err);
+    updateFirebaseStatus(false, 'تعذر الاتصال بقاعدة البيانات');
+  });
+}
+Object.values(PLAS_KEYS).forEach(listenToCollection);
+
+// ========== قراءة مصفوفة أحداث من النسخة الحيّة، مرتبة زمنياً ==========
 function loadArr(key){
-  let local = [];
-  try{ const v = JSON.parse(localStorage.getItem(key) || '[]'); if(Array.isArray(v)) local = v; }catch(e){}
-  const persisted = persistedAnalytics[PERSIST_KEY_MAP[key]] || [];
-  return dedupeEvents([...persisted, ...local]).sort((a,b)=> (a.ts||0) - (b.ts||0));
+  const stateKey = COLLECTION_TO_STATE[key];
+  return (liveData[stateKey] || []).slice().sort((a,b)=> (a.ts||0) - (b.ts||0));
 }
 
 let currentRange = '7';
@@ -767,10 +768,11 @@ document.getElementById('refreshBtn').addEventListener('click', (e)=>{
   svg.style.transform = 'rotate(360deg)';
   setTimeout(()=> svg.style.transform='rotate(0deg)', 500);
   loadProductsCatalog();
-  loadPersistedAnalytics();
+  render();
 });
 
-function downloadDataJson(){
+// تنزيل نسخة احتياطية اختيارية (JSON) من البيانات الحيّة الحالية — للأرشفة فقط، غير مطلوبة لعمل اللوحة
+function downloadBackupJson(){
   const data = {
     exported_at: new Date().toISOString(),
     visits: loadArr(PLAS_KEYS.VISITS),
@@ -782,17 +784,24 @@ function downloadDataJson(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'data.json';
+  a.download = 'data-backup.json';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
-document.getElementById('exportBtn').addEventListener('click', downloadDataJson);
-document.getElementById('exportDataBtn').addEventListener('click', downloadDataJson);
+document.getElementById('exportBtn').addEventListener('click', downloadBackupJson);
+document.getElementById('exportDataBtn').addEventListener('click', downloadBackupJson);
 
-document.getElementById('resetBtn').addEventListener('click', ()=>{
-  if(confirm('هل أنت متأكد من مسح بيانات التحليلات المخزّنة محلياً في هذا المتصفح فقط؟ السجل المحفوظ في data.json لن يتأثر إلا بعد تنزيله ورفعه يدوياً من جديد. هذا الإجراء لا يمكن التراجع عنه.')){
-    Object.values(PLAS_KEYS).forEach(k => localStorage.removeItem(k));
-    render();
+document.getElementById('resetBtn').addEventListener('click', async ()=>{
+  if(confirm('هل أنت متأكد من حذف جميع بيانات التحليلات (الزيارات، المشاهدات، النقرات، الطلبات) نهائياً من قاعدة بيانات Firebase؟ هذا الإجراء لا يمكن التراجع عنه ويؤثر على جميع الأجهزة والمتصفحات.')){
+    try{
+      for(const key of Object.values(PLAS_KEYS)){
+        const snap = await getDocs(collection(db, key));
+        await Promise.all(snap.docs.map(d => deleteDoc(d.ref)));
+      }
+    }catch(e){
+      console.error('تعذر حذف بيانات Firebase:', e);
+      alert('حدث خطأ أثناء حذف البيانات: ' + e.message);
+    }
   }
 });
 
@@ -975,12 +984,8 @@ document.getElementById('aiChips').addEventListener('click', (e)=>{
 
 // ========== التحميل الأولي: تلقائي بالكامل ==========
 loadProductsCatalog();
-loadPersistedAnalytics();
-
-window.addEventListener('storage', (e)=>{
-  if(Object.values(PLAS_KEYS).includes(e.key)) render();
-});
-setInterval(render, 20000);
+// أحداث Firebase (visits/product_views/clicks/orders) تُستمع لها مباشرة
+// أعلاه عبر onSnapshot وتُحدِّث الواجهة تلقائياً بدون أي تدخل يدوي.
 </script>
 </body>
 </html>
